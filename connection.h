@@ -10,7 +10,7 @@ void Connect() {
     if (sd == -1)
         return;
     if ((!chat_settings::join_open) || clients_soc.size() >= 128) {
-        send_command("Chat is closed or there more, then 128 people. :(", sd);
+        send_command("Chat is closed or there more, then 128 people :(", sd);
         close(sd);
         if (chat_settings::logs_attempts)
             print_stat("Join attempt");
@@ -64,6 +64,13 @@ bool send_mess(string text, int sd) {
     }
     return true;
 }
+void FD_RESET() {
+    FD_ZERO(&fd_clients);
+    FD_SET(listener, &fd_clients);
+    for (auto sd : clients) {
+        FD_SET(sd.first, &fd_clients);
+    }
+}
 bool create_connection(int port) {
     listener = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     int option = 1;
@@ -86,4 +93,3 @@ bool create_connection(int port) {
 }
 
 #endif
-

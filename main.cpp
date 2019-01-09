@@ -3,34 +3,8 @@
 #include "settings.h"
 #include "user_commands.h"
 #include "admin_commands.h"
+#include "other_commands.h"
 #include "connection.h"
-
-
-void print_error(string text) {
-    cout << style::red << text << style::normal << endl;
-}
-void print_stat(string action) {
-    cerr << style::normal << action << " (" << count_input_users << ", " <<
-         clients.size() - count_input_users - count_admin_users << ", " <<
-         count_admin_users << ")" << endl;
-}
-void send_command(string text, int sd, bool is_endl, bool is_admin_command) {
-    if (is_admin_command)
-        text = style::dark_yellow + text;
-    else
-        text = style::brown + text;
-    if (is_endl)
-        text += '\n';
-    send_mess(text + style::no_color, sd);
-}
-void FD_RESET() {
-    FD_ZERO(&fd_clients);
-    FD_SET(listener, &fd_clients);
-    for (auto sd : clients) {
-        FD_SET(sd.first, &fd_clients);
-    }
-}
-
 
 int main(int argc, char* argv[]) {
     int port;
@@ -55,7 +29,7 @@ int main(int argc, char* argv[]) {
         if (not_err < 0) {
             print_error("SELECT ERROR");
             for (int sd : clients_soc)
-                send_mess(style::dark_gray + "HACKER: I am hacker\n" + style::normal, sd);
+                send_mess(style::dark_gray + "HACKER: i am hacker\n" + style::normal, sd);
             print_error("FIXED");
         }
         if (FD_ISSET(listener, &fd_clients)) {
