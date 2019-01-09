@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         if (not_err < 0) {
             print_error("SELECT ERROR");
             for (int sd : clients_soc)
-                send_mess(style::dark_gray + "HACKER: i am hacker\n" + style::normal, sd);
+                send_mess(style::dark_gray + "HACKER: I am hacker\n" + style::normal, sd);
             print_error("FIXED");
         }
         if (FD_ISSET(listener, &fd_clients)) {
