@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     int port;
     try {
         port = stoi((string)argv[1]);
-        if (port < 1000)
+        if (port < 1024 || port > 65535)
             throw std::exception();
     } catch (std::exception e) {
         port = 9999;
